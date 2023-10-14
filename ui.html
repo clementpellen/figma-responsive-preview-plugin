@@ -1,0 +1,36 @@
+<h2>Flow URL Collector</h2>
+<p>Flow 1 URL: <input id="flow1-url" type="text" placeholder="Enter URL for Flow 1"></p>
+<p>Flow 2 URL: <input id="flow2-url" type="text" placeholder="Enter URL for Flow 2"></p>
+<button id="submit">Generate URL</button>
+<button id="cancel">Cancel</button>
+
+<p>Generated URL: <input id="generated-url" type="text" readonly></p>
+<button id="copy-url">Copy URL</button>
+
+<script>
+  document.getElementById('submit').onclick = () => {
+    const flow1URL = document.getElementById('flow1-url').value;
+    const flow2URL = document.getElementById('flow2-url').value;
+
+    parent.postMessage({ pluginMessage: { type: 'submit-urls', flow1URL, flow2URL } }, '*');
+  }
+
+  document.getElementById('copy-url').onclick = () => {
+    const generatedURL = document.getElementById('generated-url');
+    generatedURL.select();
+    document.execCommand('copy');
+    alert("URL copied!");
+  }
+
+  document.getElementById('cancel').onclick = () => {
+    parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*');
+  }
+
+  window.onmessage = event => {
+    if (event.data.pluginMessage.type === 'display-url') {
+      const urlInput = document.getElementById('generated-url');
+      urlInput.value = event.data.pluginMessage.url;
+    }
+  }
+
+</script>
