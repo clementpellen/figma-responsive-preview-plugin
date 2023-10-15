@@ -2,7 +2,7 @@
   "name": "responsive-preview",
   "id": "1294996782565676332",
   "api": "1.0.0",
-  "main": "code.js",
+  "main": "dist/code.js",
   "capabilities": [],
   "enableProposedApi": false,
   "editorType": [

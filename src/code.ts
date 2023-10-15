@@ -1,3 +1,5 @@
+const baseURL = process.env.BASE_URL;
+
 figma.showUI(__html__);
 
 figma.ui.onmessage = msg => {
@@ -5,7 +7,7 @@ figma.ui.onmessage = msg => {
     const flow1URL = encodeURIComponent(msg.flow1URL);
     const flow2URL = encodeURIComponent(msg.flow2URL);
 
-    const baseURL = "http://127.0.0.1:5500/index.html";
+    const baseURL = process.env.BASE_URL;
     const completeURL = `${baseURL}?flow1=${flow1URL}&flow2=${flow2URL}`;
 
     // Mettre à jour l'interface utilisateur avec l'URL générée
