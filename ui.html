@@ -17,7 +17,7 @@
   <h1>Responsive Preview</h1>
 
   <!-- Home Page -->
-  <div id="home-page" class="page flex-column" style="display: none;">
+  <div id="home-page" class="page flex-column">
     <!-- Phone and desktop svg -->
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg class="phone-and-desktop-image" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
@@ -261,7 +261,7 @@
 
     <!-- Button Done -->
     <div class="button-area">
-      <button class="validate flex-center radius" onclick="display('instructions-page')">
+      <button class="validate flex-center radius" onclick="display('input-page')">
         <span>Done</span>
         <svg width="10" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
           <line x1="0.182495" y1="3.62328" x2="10.184" y2="3.62328" stroke="black" />
@@ -279,30 +279,36 @@
     <div class="inputs flex-column">
       <div class="input-section flex-column">
         <h4>Smartphone flow :</h4>
-        <input class="input-url" type="texte" placeholder="Paste link here ..." />
+        <input id="flow1-url" class="input-url" type="texte" placeholder="Paste link here ..." />
       </div>
       <div class="input-section flex-column">
         <h4>Desktop flow :</h4>
-        <input class="input-url" type="texte" placeholder="Paste link here ..." />
+        <input id="flow2-url" class="input-url" type="texte" placeholder="Paste link here ..." />
       </div>
     </div>
 
     <!-- Button Generate URL -->
     <div class="button-area button-center">
-      <button class="validate flex-center radius" onclick="display('instructions-page')">
+      <button id="submit" class="validate flex-center radius">
         <span><strong>Generate URL ⚡</strong></span>
       </button>
     </div>
   </div>
 
   <!-- Output Page -->
-  <div id="output-page" class="page">
+  <div id="output-page" class="page" style="display: none;">
     <h4 class="explanation">Here is the link to your responsive sketches, ready to be shared with users :</h4>
     <div class="output-section flex-row">
-      <input class="input-url black" type="texte" placeholder="LINK" />
-      <svg class="hover" width="12" height="16" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <input id="generated-url" class="input-url black" type="texte" readonly />
+      <svg id="copy-url" class="hover" width="12" height="16" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="3.5" y="0.5" width="11" height="16.0874" rx="2.5" stroke="black" />
         <rect x="0.5" y="3.41263" width="11" height="16.0874" rx="2.5" fill="white" stroke="black" />
+      </svg>
+      <svg id="copied" width="12" height="16" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <rect x="3.5" y="0.5" width="11" height="16.0874" rx="2.5" stroke="#67CDD9" />
+        <rect x="0.5" y="3.41263" width="11" height="16.0874" rx="2.5" fill="white" stroke="#67CDD9" />
+        <path d="M5.64648 14.6465L9 10" stroke="#67CDD9" stroke-linecap="round" />
+        <path d="M5.64648 14.6465L3 12" stroke="#67CDD9" stroke-linecap="round" />
       </svg>
     </div>
   </div>
@@ -326,30 +332,30 @@
     document.getElementById(page_id).style.display = 'flex';
   }
 
-  // document.getElementById('submit').onclick = () => {
-  //   const flow1URL = document.getElementById('flow1-url').value;
-  //   const flow2URL = document.getElementById('flow2-url').value;
+  document.getElementById('submit').onclick = () => {
+    const flow1URL = document.getElementById('flow1-url').value;
+    const flow2URL = document.getElementById('flow2-url').value;
 
-  //   parent.postMessage({ pluginMessage: { type: 'submit-urls', flow1URL, flow2URL } }, '*');
-  // }
+    parent.postMessage({ pluginMessage: { type: 'submit-urls', flow1URL, flow2URL } }, '*');
 
-  // document.getElementById('copy-url').onclick = () => {
-  //   const generatedURL = document.getElementById('generated-url');
-  //   generatedURL.select();
-  //   document.execCommand('copy');
-  //   alert("URL copied!");
-  // }
+    display('output-page');
+  }
 
-  // document.getElementById('cancel').onclick = () => {
-  //   parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*');
-  // }
+  document.getElementById('copy-url').onclick = () => {
+    const generatedURL = document.getElementById('generated-url');
+    generatedURL.select();
+    document.execCommand('copy');
+    document.getElementById('copy-url').style.display = 'none';
+    document.getElementById('copied').style.display = 'block';
+  }
 
-  // window.onmessage = event => {
-  //   if (event.data.pluginMessage.type === 'display-url') {
-  //     const urlInput = document.getElementById('generated-url');
-  //     urlInput.value = event.data.pluginMessage.url;
-  //   }
-  // }
+  window.onmessage = event => {
+    if (event.data.pluginMessage.type === 'display-url') {
+      console.log("display-url", event.data.pluginMessage.url)
+      const urlInput = document.getElementById('generated-url');
+      urlInput.value = event.data.pluginMessage.url;
+    }
+  }
 
 </script>
 
@@ -501,6 +507,11 @@
   button.validate:hover {
     cursor: pointer;
     background-color: #5ab9c6;
+  }
+
+  button.validate:active {
+    box-shadow: none;
+    transform: translateY(1px);
   }
 
   .instructions-section {
