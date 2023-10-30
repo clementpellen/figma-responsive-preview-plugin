@@ -17,7 +17,7 @@
   <h1>Responsive Preview</h1>
 
   <!-- Home Page -->
-  <div id="home-page" class="page flex-column">
+  <div id="home-page" class="page flex-column" style="display: none;">
     <!-- Phone and desktop svg -->
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg class="phone-and-desktop-image" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
@@ -273,6 +273,40 @@
       </button>
     </div>
   </div>
+
+  <!-- Input Page -->
+  <div id="input-page" class="page flex-column" style="display: none;">
+    <div class="inputs flex-column">
+      <div class="input-section flex-column">
+        <h4>Smartphone flow :</h4>
+        <input class="input-url" type="texte" placeholder="Paste link here ..." />
+      </div>
+      <div class="input-section flex-column">
+        <h4>Desktop flow :</h4>
+        <input class="input-url" type="texte" placeholder="Paste link here ..." />
+      </div>
+    </div>
+
+    <!-- Button Generate URL -->
+    <div class="button-area button-center">
+      <button class="validate flex-center radius" onclick="display('instructions-page')">
+        <span><strong>Generate URL ⚡</strong></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Output Page -->
+  <div id="output-page" class="page">
+    <h4 class="explanation">Here is the link to your responsive sketches, ready to be shared with users :</h4>
+    <div class="output-section flex-row">
+      <input class="input-url black" type="texte" placeholder="LINK" />
+      <svg class="hover" width="12" height="16" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3.5" y="0.5" width="11" height="16.0874" rx="2.5" stroke="black" />
+        <rect x="0.5" y="3.41263" width="11" height="16.0874" rx="2.5" fill="white" stroke="black" />
+      </svg>
+    </div>
+  </div>
+
 </div>
 
 
@@ -413,6 +447,10 @@
     border-radius: 8px;
   }
 
+  .hover {
+    cursor: pointer;
+  }
+
   /* tags */
   .main-content {
     box-sizing: border-box;
@@ -484,6 +522,47 @@
     border-radius: 6px;
     box-shadow: 2px 0 4px 0 var(--third-color);
     scale: 80%;
+  }
+
+  .inputs {
+    gap: 12px;
+  }
+
+  .input-section {
+    gap: 3px;
+  }
+
+  .input-url {
+    box-sizing: border-box;
+    width: 160px;
+    border: 1px solid var(--main-color);
+    font-size: 0.6rem;
+    font-weight: light;
+    border-radius: 5px;
+    padding-left: 10px;
+  }
+
+  .button-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #output-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .explanation {
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .output-section {
+    gap: 5px;
   }
 
 </style>
