@@ -7,7 +7,6 @@ Ce plugin permet de visualiser une maquette Figma sur différents appareils (des
 ## Build de l'application
 
 ```bash
-cd ./responsive-preview
 npm run build
 ```
 
